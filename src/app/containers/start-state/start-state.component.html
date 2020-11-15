@@ -1,9 +1,9 @@
-<h3 class="pb-3">
+<h3 class="pb-3 title">
   Введите размеры двух матриц
 </h3>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 matrix-form">
       <h5>Первая матрица</h5>
       <div class="form-group">
         <label for="firstWidth">Ширина первой матрицы</label>
@@ -24,7 +24,7 @@
         />
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 matrix-form">
       <h5>Вторая матрица</h5>
       <div class="form-group">
         <label for="secondWidth">Ширина второй матрицы</label>
@@ -46,7 +46,9 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" [disabled]="!form.valid">Далее</button>
+  <button class="btn btn-primary submit-button" [disabled]="!form.valid">
+    Далее
+  </button>
 </form>
 <div class="errors mt-3">
   <div

@@ -1,11 +1,14 @@
-<button class="btn btn-link" (click)="goBack()">
+<button class="btn btn-link back-link" (click)="goBack()">
   ← Изменить значения
 </button>
 <h3 class="pb-3">
   Результат:
 </h3>
-<table class="table table-bordered text-center">
+<table *ngIf="!error" class="table table-bordered text-center">
   <tr *ngFor="let row of result">
     <td *ngFor="let column of row">{{ column }}</td>
   </tr>
 </table>
+<div *ngIf="error" class="alert alert-danger mt-3" role="alert">
+  {{ error }}
+</div>

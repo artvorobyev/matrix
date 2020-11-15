@@ -24,6 +24,7 @@ export class InputStateComponent implements OnInit, OnChanges {
   public secondMatrixRows: any[];
   public secondMatrixColumns: any[];
   public form = new FormGroup({});
+  public error: string;
 
   constructor() {}
 
@@ -31,7 +32,11 @@ export class InputStateComponent implements OnInit, OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.matrixSizes) {
-      console.log(this.matrixSizes);
+      if (Object.values(this.matrixSizes).filter((item) => item < 1).length) {
+        this.error = 'Размеры матрицы не должны быть меньше 1';
+        return;
+      }
+
       this.firstMatrixRows = Array(this.matrixSizes.firstHeight);
       this.firstMatrixColumns = Array(this.matrixSizes.firstWidth);
       this.createFields(
@@ -77,7 +82,6 @@ export class InputStateComponent implements OnInit, OnChanges {
         this.matrixSizes.secondWidth
       ),
     };
-    console.log(this.form.value);
     this.calculate.emit(values);
   }
 

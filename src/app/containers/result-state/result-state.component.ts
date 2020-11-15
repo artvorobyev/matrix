@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { letProto } from 'rxjs/operator/let';
 import { IMatrixValues } from '../../interfaces';
 
 @Component({
@@ -19,13 +18,25 @@ export class ResultStateComponent implements OnInit, OnChanges {
   @Input() matrixValues: IMatrixValues;
   @Output() back = new EventEmitter<void>();
   public result: number[][];
+  public error: string;
   constructor() {}
 
   ngOnInit() {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.matrixValues) {
-      console.log(this.matrixValues);
+      if (!this.matrixValues.first.length || !this.matrixValues.second.length) {
+        this.error = 'Матрица не может быть пустой';
+        return;
+      }
+      if (
+        this.matrixValues.first[0].length !== this.matrixValues.second.length
+      ) {
+        this.error =
+          'Ширина первой матрицы должна быть равна высоте второй матрицы';
+        return;
+      }
+
       this.result = this.calcResult(this.matrixValues);
     }
   }
