@@ -1,0 +1,59 @@
+<h3 class="pb-3">
+  Введите размеры двух матриц
+</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Первая матрица</h5>
+      <div class="form-group">
+        <label for="firstWidth">Ширина первой матрицы</label>
+        <input
+          type="number"
+          id="firstWidth"
+          class="form-control"
+          formControlName="firstWidth"
+        />
+      </div>
+      <div class="form-group">
+        <label for="firstWidth">Высота первой матрицы</label>
+        <input
+          type="number"
+          id="firstHeight"
+          class="form-control"
+          formControlName="firstHeight"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h5>Вторая матрица</h5>
+      <div class="form-group">
+        <label for="secondWidth">Ширина второй матрицы</label>
+        <input
+          type="number"
+          id="secondWidth"
+          class="form-control"
+          formControlName="secondWidth"
+        />
+      </div>
+      <div class="form-group">
+        <label for="secondWidth">Высота второй матрицы</label>
+        <input
+          type="number"
+          id="secondHeight"
+          class="form-control"
+          formControlName="secondHeight"
+        />
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!form.valid">Далее</button>
+</form>
+<div class="errors mt-3">
+  <div
+    *ngFor="let error of getFormValidationErrors()"
+    class="alert alert-danger mb-2"
+    role="alert"
+  >
+    {{ error }}
+  </div>
+</div>

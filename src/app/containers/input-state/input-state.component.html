@@ -1,0 +1,47 @@
+<button class="btn btn-link" (click)="goBack()">
+  ← Изменить размеры матриц
+</button>
+<h3 class="pb-3">
+  Введите матрицы
+</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Первая матрица</h5>
+      <table>
+        <tr *ngFor="let row of firstMatrixRows; let rowIndex = index">
+          <td
+            class="column"
+            *ngFor="let column of firstMatrixColumns; let columnIndex = index"
+          >
+            <input
+              type="number"
+              class="form-control"
+              formControlName="first_{{ rowIndex + 1 }}_{{ columnIndex + 1 }}"
+              required
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <h5>Вторая матрица</h5>
+      <table>
+        <tr *ngFor="let row of secondMatrixRows; let rowIndex = index">
+          <td
+            class="column"
+            *ngFor="let column of secondMatrixColumns; let columnIndex = index"
+          >
+            <input
+              type="number"
+              class="form-control"
+              formControlName="second_{{ rowIndex + 1 }}_{{ columnIndex + 1 }}"
+              required
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!form.valid">Умножить</button>
+</form>

@@ -1,0 +1,94 @@
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IMatrixSizes, IMatrixValues } from '../../interfaces';
+
+@Component({
+  selector: 'app-input-state',
+  templateUrl: './input-state.component.html',
+  styleUrls: ['./input-state.component.css'],
+})
+export class InputStateComponent implements OnInit, OnChanges {
+  @Input() matrixSizes: IMatrixSizes;
+  @Output() back = new EventEmitter<void>();
+  @Output() calculate = new EventEmitter<IMatrixValues>();
+  public firstMatrixRows: any[];
+  public firstMatrixColumns: any[];
+  public secondMatrixRows: any[];
+  public secondMatrixColumns: any[];
+  public form = new FormGroup({});
+
+  constructor() {}
+
+  ngOnInit() {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.matrixSizes) {
+      console.log(this.matrixSizes);
+      this.firstMatrixRows = Array(this.matrixSizes.firstHeight);
+      this.firstMatrixColumns = Array(this.matrixSizes.firstWidth);
+      this.createFields(
+        'first',
+        this.matrixSizes.firstHeight,
+        this.matrixSizes.firstWidth
+      );
+      this.secondMatrixRows = Array(this.matrixSizes.secondHeight);
+      this.secondMatrixColumns = Array(this.matrixSizes.secondWidth);
+      this.createFields(
+        'second',
+        this.matrixSizes.secondHeight,
+        this.matrixSizes.secondWidth
+      );
+    }
+  }
+
+  public goBack(): void {
+    this.back.emit();
+  }
+
+  public createFields(key: string, rows: number, columns: number): void {
+    for (let row = 1; row <= rows; row++) {
+      for (let column = 1; column <= columns; column++) {
+        this.form.addControl(
+          `${key}_${row}_${column}`,
+          new FormControl('', [Validators.required])
+        );
+      }
+    }
+  }
+
+  public onSubmit(): void {
+    const values = {
+      first: this.collectValues(
+        'first',
+        this.matrixSizes.firstHeight,
+        this.matrixSizes.firstWidth
+      ),
+      second: this.collectValues(
+        'second',
+        this.matrixSizes.secondHeight,
+        this.matrixSizes.secondWidth
+      ),
+    };
+    console.log(this.form.value);
+    this.calculate.emit(values);
+  }
+
+  public collectValues(key: string, rows: number, columns: number): number[][] {
+    let array = [];
+    for (let row = 0; row < rows; row++) {
+      array[row] = [];
+      for (let column = 0; column < columns; column++) {
+        array[row][column] = this.form.value[`${key}_${row + 1}_${column + 1}`];
+      }
+    }
+    return array;
+  }
+}

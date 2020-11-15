@@ -1,0 +1,11 @@
+<button class="btn btn-link" (click)="goBack()">
+  ← Изменить значения
+</button>
+<h3 class="pb-3">
+  Результат:
+</h3>
+<table class="table table-bordered text-center">
+  <tr *ngFor="let row of result">
+    <td *ngFor="let column of row">{{ column }}</td>
+  </tr>
+</table>
