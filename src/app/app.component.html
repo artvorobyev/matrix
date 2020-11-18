@@ -3,17 +3,22 @@
     <h1 class="pb-3">Умножение матриц</h1>
     <ng-container [ngSwitch]="state">
       <ng-container *ngSwitchCase="states.start">
-        <app-start-state (next)="setMatrixSizes($event)"></app-start-state>
+        <app-start-state
+          class="start-state"
+          (next)="setMatrixSizes($event)"
+        ></app-start-state>
       </ng-container>
       <ng-container *ngSwitchCase="states.input">
         <app-input-state
+          class="input-state"
           [matrixSizes]="matrixSizes"
           (back)="switchToStart()"
-          (calculate)="setMatixValues($event)"
+          (calculate)="setMatrixValues($event)"
         ></app-input-state>
       </ng-container>
       <ng-container *ngSwitchCase="states.result">
         <app-result-state
+          class="result-state"
           [matrixValues]="matrixValues"
           (back)="switchToInput()"
         ></app-result-state>

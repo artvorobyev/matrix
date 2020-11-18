@@ -20,7 +20,7 @@ export class AppComponent {
   public switchToStart(): void {
     this.state = AppState.start;
   }
-  public setMatixValues(data: IMatrixValues): void {
+  public setMatrixValues(data: IMatrixValues): void {
     this.matrixValues = data;
     this.state = AppState.result;
   }
