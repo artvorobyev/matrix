@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { P } from '@angular/core/src/render3';
+import { Component, Output, EventEmitter } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -14,7 +13,7 @@ import { IMatrixSizes } from '../../interfaces';
   templateUrl: './start-state.component.html',
   styleUrls: ['./start-state.component.css'],
 })
-export class StartStateComponent implements OnInit {
+export class StartStateComponent {
   @Output() next = new EventEmitter<IMatrixSizes>();
   public form = new FormGroup(
     {
@@ -25,10 +24,6 @@ export class StartStateComponent implements OnInit {
     },
     this.formValidator
   );
-
-  constructor() {}
-
-  ngOnInit() {}
 
   public onSubmit(): void {
     this.next.emit(this.form.value);
@@ -54,18 +49,18 @@ export class StartStateComponent implements OnInit {
     ) {
       errors = {
         ...errors,
-        negative: 'Минимальное значение высоты и ширины = 1',
+        notPositive: 'Минимальное значение высоты и ширины = 1',
       };
     }
 
     return Object.keys(errors) ? errors : null;
   }
 
-  public getFormValidationErrors(): string[] | null {
-    if (!this.form.errors) {
+  public getFormValidationErrors(form: FormGroup): string[] | null {
+    if (!form.errors) {
       return null;
     }
 
-    return Object.values(this.form.errors);
+    return Object.values(form.errors);
   }
 }

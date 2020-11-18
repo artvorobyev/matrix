@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Output,
   EventEmitter,
   Input,
@@ -15,7 +14,7 @@ import { IMatrixSizes, IMatrixValues } from '../../interfaces';
   templateUrl: './input-state.component.html',
   styleUrls: ['./input-state.component.css'],
 })
-export class InputStateComponent implements OnInit, OnChanges {
+export class InputStateComponent implements OnChanges {
   @Input() matrixSizes: IMatrixSizes;
   @Output() back = new EventEmitter<void>();
   @Output() calculate = new EventEmitter<IMatrixValues>();
@@ -25,10 +24,6 @@ export class InputStateComponent implements OnInit, OnChanges {
   public secondMatrixColumns: any[];
   public form = new FormGroup({});
   public error: string;
-
-  constructor() {}
-
-  ngOnInit() {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.matrixSizes) {
@@ -72,11 +67,13 @@ export class InputStateComponent implements OnInit, OnChanges {
   public onSubmit(): void {
     const values = {
       first: this.collectValues(
+        this.form,
         'first',
         this.matrixSizes.firstHeight,
         this.matrixSizes.firstWidth
       ),
       second: this.collectValues(
+        this.form,
         'second',
         this.matrixSizes.secondHeight,
         this.matrixSizes.secondWidth
@@ -85,12 +82,25 @@ export class InputStateComponent implements OnInit, OnChanges {
     this.calculate.emit(values);
   }
 
-  public collectValues(key: string, rows: number, columns: number): number[][] {
+  public collectValues(
+    form: FormGroup,
+    key: string,
+    rows: number,
+    columns: number
+  ): number[][] {
     let array = [];
+    if (
+      !Object.keys(form.value).filter((item) => item.includes(key)).length ||
+      columns < 1 ||
+      rows < 1
+    ) {
+      return array;
+    }
+
     for (let row = 0; row < rows; row++) {
       array[row] = [];
       for (let column = 0; column < columns; column++) {
-        array[row][column] = this.form.value[`${key}_${row + 1}_${column + 1}`];
+        array[row][column] = form.value[`${key}_${row + 1}_${column + 1}`];
       }
     }
     return array;

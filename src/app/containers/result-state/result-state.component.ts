@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -14,14 +13,11 @@ import { IMatrixValues } from '../../interfaces';
   templateUrl: './result-state.component.html',
   styleUrls: ['./result-state.component.css'],
 })
-export class ResultStateComponent implements OnInit, OnChanges {
+export class ResultStateComponent implements OnChanges {
   @Input() matrixValues: IMatrixValues;
   @Output() back = new EventEmitter<void>();
-  public result: number[][];
+  public result: number[][] | null;
   public error: string;
-  constructor() {}
-
-  ngOnInit() {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.matrixValues) {
@@ -37,20 +33,29 @@ export class ResultStateComponent implements OnInit, OnChanges {
         return;
       }
 
-      this.result = this.calcResult(this.matrixValues);
+      this.result = this.calcResult(
+        this.matrixValues.first,
+        this.matrixValues.second
+      );
     }
   }
 
-  public calcResult(data: IMatrixValues): number[][] {
-    const m1 = data.first;
-    const m2 = data.second;
+  public calcResult(first: number[][], second: number[][]): number[][] | null {
+    if (!first.length || !second.length) {
+      return null;
+    }
+
+    if (first[0].length !== second.length) {
+      return null;
+    }
+
     var result = [];
-    for (var i = 0; i < m1.length; i++) {
+    for (var i = 0; i < first.length; i++) {
       result[i] = [];
-      for (var j = 0; j < m2[0].length; j++) {
+      for (var j = 0; j < second[0].length; j++) {
         var sum = 0;
-        for (var k = 0; k < m1[0].length; k++) {
-          sum += m1[i][k] * m2[k][j];
+        for (var k = 0; k < first[0].length; k++) {
+          sum += first[i][k] * second[k][j];
         }
         result[i][j] = sum;
       }
