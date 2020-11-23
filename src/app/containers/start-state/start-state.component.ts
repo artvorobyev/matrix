@@ -53,7 +53,7 @@ export class StartStateComponent {
       };
     }
 
-    return Object.keys(errors) ? errors : null;
+    return Object.keys(errors).length ? errors : null;
   }
 
   public getFormValidationErrors(form: FormGroup): string[] | null {

@@ -19,7 +19,7 @@ describe('InputStateComponent Unit Tests', () => {
     fixture.detectChanges();
   });
 
-  it('Ключ матрицы (key) присутствует в form', () => {
+  it('Ключ матрицы (key) присутствует в form, Количество строк >= 1, Количество столбцов >= 1', () => {
     const form = new FormGroup({
       first_1_1: new FormControl(1),
       second_1_1: new FormControl(1),
@@ -63,37 +63,6 @@ describe('InputStateComponent Unit Tests', () => {
     );
   });
 
-  it('Количество строк = 1', () => {
-    const form = new FormGroup({
-      first_1_1: new FormControl(1),
-      second_1_1: new FormControl(1),
-    });
-    const key = 'first';
-    const rows = 1;
-    const columns = 1;
-
-    const expectedResult = [[1]];
-    expect(component.collectValues(form, key, rows, columns)).toEqual(
-      expectedResult
-    );
-  });
-
-  it('Количество строк > 1', () => {
-    const form = new FormGroup({
-      first_1_1: new FormControl(1),
-      first_2_1: new FormControl(1),
-      second_1_1: new FormControl(1),
-    });
-    const key = 'first';
-    const rows = 2;
-    const columns = 1;
-
-    const expectedResult = [[1], [1]];
-    expect(component.collectValues(form, key, rows, columns)).toEqual(
-      expectedResult
-    );
-  });
-
   it('Количество столбцов < 1', () => {
     const form = new FormGroup({
       first_1_1: new FormControl(1),
@@ -104,38 +73,6 @@ describe('InputStateComponent Unit Tests', () => {
     const columns = -1;
 
     const expectedResult = [];
-    expect(component.collectValues(form, key, rows, columns)).toEqual(
-      expectedResult
-    );
-  });
-
-  it('Количество столбцов = 1', () => {
-    const form = new FormGroup({
-      first_1_1: new FormControl(1),
-      second_1_1: new FormControl(1),
-    });
-    const key = 'first';
-    const rows = 1;
-    const columns = 1;
-
-    const expectedResult = [[1]];
-    expect(component.collectValues(form, key, rows, columns)).toEqual(
-      expectedResult
-    );
-  });
-
-  it('Количество столбцов > 1', () => {
-    const form = new FormGroup({
-      first_1_1: new FormControl(1),
-      first_1_2: new FormControl(1),
-      second_1_1: new FormControl(1),
-      second_2_1: new FormControl(1),
-    });
-    const key = 'first';
-    const rows = 1;
-    const columns = 2;
-
-    const expectedResult = [[1, 1]];
     expect(component.collectValues(form, key, rows, columns)).toEqual(
       expectedResult
     );

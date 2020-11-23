@@ -25,22 +25,22 @@ describe('StartStateComponent Unit Tests', () => {
     fixture.detectChanges();
   });
 
-  it('Ширина первой матрицы равна высоте второй матрицы', () => {
+  /* метод formValidator */
+
+  it('Ответ не содержит ошибок', () => {
     expect(
-      Object.keys(
-        component.formValidator(
-          new FormControl({
-            firstWidth: 2,
-            firstHeight: 3,
-            secondWidth: 4,
-            secondHeight: 2,
-          })
-        )
+      component.formValidator(
+        new FormControl({
+          firstWidth: 2,
+          firstHeight: 3,
+          secondWidth: 4,
+          secondHeight: 2,
+        })
       )
-    ).not.toContain('incorrectSizes');
+    ).toEqual(null);
   });
 
-  it('Ширина первой матрицы не равна высоте второй матрицы', () => {
+  it('Ответ содержит ошибку с ключом incorrectSizes', () => {
     expect(
       Object.keys(
         component.formValidator(
@@ -55,7 +55,7 @@ describe('StartStateComponent Unit Tests', () => {
     ).toContain('incorrectSizes');
   });
 
-  it('Размеры матрицы меньше 1', () => {
+  it('Ответ содержит ошибку с ключом notPositive', () => {
     expect(
       Object.keys(
         component.formValidator(
@@ -70,35 +70,7 @@ describe('StartStateComponent Unit Tests', () => {
     ).toContain('notPositive');
   });
 
-  it('Размеры матрицы равен 1', () => {
-    expect(
-      Object.keys(
-        component.formValidator(
-          new FormControl({
-            firstWidth: 1,
-            firstHeight: 1,
-            secondWidth: 1,
-            secondHeight: 1,
-          })
-        )
-      )
-    ).not.toContain('notPositive');
-  });
-
-  it('Размеры матрицы больше 1', () => {
-    expect(
-      Object.keys(
-        component.formValidator(
-          new FormControl({
-            firstWidth: 2,
-            firstHeight: 2,
-            secondWidth: 2,
-            secondHeight: 2,
-          })
-        )
-      )
-    ).not.toContain('notPositive');
-  });
+  /* метод getFormValidationErrors */
 
   it('В форме присутствуют ошибки', () => {
     const form = new FormGroup(
