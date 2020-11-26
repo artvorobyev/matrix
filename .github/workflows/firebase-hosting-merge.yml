@@ -14,9 +14,9 @@ jobs:
       - name: 'Install dependencies'
         run: npm ci
       - name: 'Unit and shallow tests'
-        run: ng test --progress false --watch false
+        run: npm run test --progress false --watch false
       - name: 'Build'
-        run: ng build
+        run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
