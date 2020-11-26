@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "citest": "ng test --progress false --watch false"
+    "citest": "ng test --browsers ChromeHeadless --progress false --watch false"
   },
   "private": true,
   "dependencies": {
