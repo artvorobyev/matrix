@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: 'Install dependencies'
-        run: npm ci
+        run: npm ci && npm install -g @angular/cli
       - name: 'Unit and shallow tests'
         run: ng test
       - name: 'Build'
