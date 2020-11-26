@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e --webdriverUpdate=false",
     "citest": "ng test --browsers ChromeHeadless --progress false --watch false",
-    "postinstall": "node_modules/.bin/webdriver-manager update --versions.chrome=87.0.4280.67"
+    "postinstall": "node_modules/.bin/webdriver-manager update --versions.chrome=$(google-chrome --version | cut -d ' ' -f 3)"
   },
   "private": true,
   "dependencies": {
