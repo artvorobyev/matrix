@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ng test
+      - name: 'Install dependencies'
+        run: npm ci
+      - name: 'Unit and shallow tests'
+        run: ng test
+      - name: 'Build'
+        run: ng build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
