@@ -4,12 +4,14 @@
     <ng-container [ngSwitch]="state">
       <ng-container *ngSwitchCase="states.start">
         <app-start-state
+          id="startState"
           class="start-state"
           (next)="setMatrixSizes($event)"
         ></app-start-state>
       </ng-container>
       <ng-container *ngSwitchCase="states.input">
         <app-input-state
+          id="inputState"
           class="input-state"
           [matrixSizes]="matrixSizes"
           (back)="switchToStart()"
@@ -18,6 +20,7 @@
       </ng-container>
       <ng-container *ngSwitchCase="states.result">
         <app-result-state
+          id="resultState"
           class="result-state"
           [matrixValues]="matrixValues"
           (back)="switchToInput()"

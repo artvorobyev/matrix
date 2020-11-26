@@ -6,7 +6,7 @@
 </h3>
 <form *ngIf="!error" class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row">
-    <div class="col-md-6 matrix-form">
+    <div class="col-md-6 matrix-form matrix-form-first">
       <h5>Первая матрица</h5>
       <table>
         <tr *ngFor="let row of firstMatrixRows; let rowIndex = index">
@@ -25,7 +25,7 @@
         </tr>
       </table>
     </div>
-    <div class="col-md-6 matrix-form">
+    <div class="col-md-6 matrix-form matrix-form-second">
       <h5>Вторая матрица</h5>
       <table>
         <tr *ngFor="let row of secondMatrixRows; let rowIndex = index">
@@ -45,7 +45,11 @@
       </table>
     </div>
   </div>
-  <button class="btn btn-primary submit-button" [disabled]="!form.valid">
+  <button
+    id="inputSubmitButton"
+    class="btn btn-primary submit-button"
+    [disabled]="!form.valid"
+  >
     Умножить
   </button>
 </form>
