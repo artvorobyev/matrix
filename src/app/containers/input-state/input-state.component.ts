@@ -54,6 +54,14 @@ export class InputStateComponent implements OnChanges {
   }
 
   public createFields(key: string, rows: number, columns: number): void {
+    if (rows < 1) {
+      return;
+    }
+
+    if (columns < 1) {
+      return;
+    }
+
     for (let row = 1; row <= rows; row++) {
       for (let column = 1; column <= columns; column++) {
         this.form.addControl(
