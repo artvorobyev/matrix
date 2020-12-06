@@ -46,6 +46,30 @@ describe('AppComponent', () => {
     });
   }));
 
+  it('При вводе некорректных размеров матрицы в поля StartStateComponent они не передаются в AppComponent', async(() => {
+    const button = fixture.nativeElement.querySelector('.submit-button');
+    const parent = fixture.nativeElement;
+
+    const firstWidthInput = parent.querySelector('#firstWidth');
+    const firstHeightInput = parent.querySelector('#firstHeight');
+    const secondWidthInput = parent.querySelector('#secondWidth');
+    const secondHeightInput = parent.querySelector('#secondHeight');
+
+    spyOn(component, 'setMatrixSizes');
+    firstWidthInput.value = '';
+    firstHeightInput.value = '';
+    secondWidthInput.value = '';
+    secondHeightInput.value = '';
+    firstWidthInput.dispatchEvent(new Event('input'));
+    firstHeightInput.dispatchEvent(new Event('input'));
+    secondWidthInput.dispatchEvent(new Event('input'));
+    secondHeightInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    button.click();
+    expect(component.setMatrixSizes).not.toHaveBeenCalled();
+  }));
+
   it('При вводе элементов матрицы в поля InputStateComponent они корректно передаются в AppComponent', async(() => {
     spyOn(component, 'setMatrixValues');
 
@@ -92,5 +116,47 @@ describe('AppComponent', () => {
         [5, 6],
       ],
     });
+  }));
+
+  it('При вводе пустых элементов матрицы в поля InputStateComponent они не передаются в AppComponent', async(() => {
+    spyOn(component, 'setMatrixValues');
+
+    component.matrixSizes = {
+      firstWidth: 2,
+      firstHeight: 1,
+      secondWidth: 2,
+      secondHeight: 2,
+    };
+    component.state = AppState.input;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('.submit-button');
+    const parent = fixture.nativeElement;
+
+    const firstInput_1_1 = parent.querySelector('#first_1_1');
+    const firstInput_1_2 = parent.querySelector('#first_1_2');
+    const secondInput_1_1 = parent.querySelector('#second_1_1');
+    const secondInput_1_2 = parent.querySelector('#second_1_2');
+    const secondInput_2_1 = parent.querySelector('#second_2_1');
+    const secondInput_2_2 = parent.querySelector('#second_2_2');
+
+    firstInput_1_1.value = '';
+    firstInput_1_2.value = '';
+    secondInput_1_1.value = '';
+    secondInput_1_2.value = '';
+    secondInput_2_1.value = '';
+    secondInput_2_2.value = '';
+
+    firstInput_1_1.dispatchEvent(new Event('input'));
+    firstInput_1_2.dispatchEvent(new Event('input'));
+    secondInput_1_1.dispatchEvent(new Event('input'));
+    secondInput_1_2.dispatchEvent(new Event('input'));
+    secondInput_2_1.dispatchEvent(new Event('input'));
+    secondInput_2_2.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+
+    button.click();
+    expect(component.setMatrixValues).not.toHaveBeenCalled();
   }));
 });
