@@ -48,7 +48,7 @@ describe('matrix App', () => {
     ).toBeTruthy();
   });
 
-  it('Приложение должно обеспечивать ввод элементов матрицы, согласно введенным ранее ширине и высоте', () => {
+  it('Количество полей ввода элементов матрицы соответствует введенным ранее ширине и высоте', () => {
     page.navigateTo();
     const button = page.getElementById('startSubmitButton');
     page.getElementById('firstWidth').sendKeys('2');
@@ -58,6 +58,18 @@ describe('matrix App', () => {
     button.click();
     expect(page.getMatrixInputs('first').count()).toEqual(6);
     expect(page.getMatrixInputs('second').count()).toEqual(8);
+  });
+
+  it('Ввод элементов матрицы недоступен', () => {
+    page.navigateTo();
+    const button = page.getElementById('startSubmitButton');
+    page.getElementById('firstWidth').sendKeys('0');
+    page.getElementById('firstHeight').sendKeys('0');
+    page.getElementById('secondWidth').sendKeys('0');
+    page.getElementById('secondHeight').sendKeys('0');
+    button.click();
+    expect(page.getMatrixInputs('first').count()).toEqual(0);
+    expect(page.getMatrixInputs('second').count()).toEqual(0);
   });
 
   it('Приложение должно обеспечивать возврат к вводу размеров', () => {
@@ -94,6 +106,18 @@ describe('matrix App', () => {
     expect(page.getElementsByCss('.matrix-element').get(1).getText()).toEqual(
       '16'
     );
+  });
+
+  it('Результат не отображается', () => {
+    page.navigateTo();
+    const button = page.getElementById('startSubmitButton');
+    page.getElementById('firstWidth').sendKeys('2');
+    page.getElementById('firstHeight').sendKeys('1');
+    page.getElementById('secondWidth').sendKeys('2');
+    page.getElementById('secondHeight').sendKeys('2');
+    button.click();
+    page.getElementById('inputSubmitButton').click();
+    expect(page.getElementsByCss('.matrix-element').count()).toEqual(0);
   });
 
   it('Приложение должно обеспечивать возврат к вводу элементов', () => {
